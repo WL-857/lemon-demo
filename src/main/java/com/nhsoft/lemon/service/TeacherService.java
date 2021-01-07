@@ -18,5 +18,5 @@ public interface TeacherService{
      * @param pageSize
      * @return
      */
-    List<TeacherDTO> listAllTeacher(int pageNo, int pageSize);
+    List<Teacher> listAllTeacher(int pageNo, int pageSize);
 }

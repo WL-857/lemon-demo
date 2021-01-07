@@ -19,5 +19,38 @@ public interface CourseService {
      * @return
      */
 
-    List<CourseDTO> listAllCourse(int pageNo, int pageSize);
+    List<Course> listAllCourse(int pageNo, int pageSize);
+
+    /**
+     * 根据课程编号查询课程信息
+     * @param no
+     * @return
+     */
+    Course readCourse(String no);
+
+    /**
+     * 添加课程
+     * @param course
+     * @return
+     */
+    Course saveCourse(Course course);
+
+    /**
+     * 批量添加课程
+     * @param courses
+     * @return
+     */
+    List<Course> batchSaveCourse(List<Course> courses);
+
+    /**
+     * 根据id删除课程
+     * @param id
+     */
+    void deleteCourse(Long id);
+
+    /**
+     * 批量删除
+     * @param courses
+     */
+    void batchDeleteCourse(List<Course> courses);
 }

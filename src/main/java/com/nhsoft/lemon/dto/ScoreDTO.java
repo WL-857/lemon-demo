@@ -38,4 +38,5 @@ public class ScoreDTO implements Serializable {
      */
     private String stuName;
 
+
 }

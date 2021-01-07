@@ -2,8 +2,11 @@ package com.nhsoft.lemon.service.impl;
 
 import com.nhsoft.lemon.dto.ScoreDTO;
 import com.nhsoft.lemon.model.Score;
+import com.nhsoft.lemon.model.extend.ScoreExtend;
+import com.nhsoft.lemon.model.extend.TeacherExtend;
 import com.nhsoft.lemon.repository.ScoreDao;
 import com.nhsoft.lemon.service.ScoreService;
+import com.nhsoft.lemon.utils.CopyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +25,39 @@ public class ScoreServiceImpl implements ScoreService {
     private ScoreDao scoreDao;
 
     @Override
-    public List<ScoreDTO> listStudentAllGrade(String stuNo, String time) {
+    public List<ScoreExtend> listStudentAllGrade(String stuNo, String time) {
         if (StringUtils.isEmpty(stuNo) || StringUtils.isEmpty(time)) {
-            return new ArrayList<ScoreDTO>();
+            return new ArrayList<ScoreExtend>();
         }
-        List<ScoreDTO> scoreDTOS = scoreDao.listStudentAllGrade(stuNo, time);
-        if(CollectionUtils.isEmpty(scoreDTOS)){
-            return new ArrayList<ScoreDTO>();
+        List<ScoreExtend> scoreExtends = scoreDao.listStudentAllGrade(stuNo, time);
+        if(CollectionUtils.isEmpty(scoreExtends)){
+            return new ArrayList<ScoreExtend>();
         }
-        return scoreDTOS;
+        return scoreExtends;
+    }
+
+    @Override
+    public List<TeacherExtend> readMaxAndMinAndAvgScoreByTeachNo(String teachNo, String time) {
+
+        if (StringUtils.isEmpty(teachNo) || StringUtils.isEmpty(time)) {
+            return new ArrayList<TeacherExtend>();
+        }
+        List<TeacherExtend> scoreExtends = scoreDao.readMaxAndMinAndAvgScoreByTeachNo(teachNo, time);
+        if(CollectionUtils.isEmpty(scoreExtends)){
+            return new ArrayList<TeacherExtend>();
+        }
+        return scoreExtends;
+    }
+
+    @Override
+    public List<TeacherExtend> listAllMaxMinAvgScore(String year) {
+        if (StringUtils.isEmpty(year)) {
+            return new ArrayList<TeacherExtend>();
+        }
+        List<TeacherExtend> teacherExtends = scoreDao.listAllMaxMinAvgScore(year);
+        if(CollectionUtils.isEmpty(teacherExtends)){
+            return new ArrayList<TeacherExtend>();
+        }
+        return teacherExtends;
     }
 }

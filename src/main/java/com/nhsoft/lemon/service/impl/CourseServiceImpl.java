@@ -2,7 +2,7 @@ package com.nhsoft.lemon.service.impl;
 
 import com.nhsoft.lemon.repository.CourseDao;
 import com.nhsoft.lemon.dto.CourseDTO;
-import com.nhsoft.lemon.mapstruct.CourseDTOConverter;
+
 import com.nhsoft.lemon.model.Course;
 import com.nhsoft.lemon.service.CourseService;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +24,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseDao courseDao;
 
     @Override
-    public List<CourseDTO> listAllCourse(int pageNo, int pageSize) {
+    public List<Course> listAllCourse(int pageNo, int pageSize) {
         if(pageNo<= 0){
             pageNo = 1;
         }
@@ -33,7 +33,32 @@ public class CourseServiceImpl implements CourseService {
         }
         PageRequest page = PageRequest.of(pageNo-1, pageSize);
         List<Course> courses = courseDao.listAllCourse(page);
-        List<CourseDTO>  courseDTOS = CourseDTOConverter.INSTANCE.domain2dto(courses);
-        return courseDTOS;
+        return courses;
+    }
+
+    @Override
+    public Course readCourse(String no) {
+        return courseDao.readCourse(no);
+    }
+
+    @Override
+    public Course saveCourse(Course course) {
+        return courseDao.save(course);
+    }
+
+    @Override
+    public List<Course> batchSaveCourse(List<Course> courses) {
+        List<Course> list = courseDao.saveAll(courses);
+        return list;
+    }
+
+    @Override
+    public void deleteCourse(Long id) {
+        courseDao.deleteById(id);
+    }
+
+    @Override
+    public void batchDeleteCourse(List<Course> courses) {
+        courseDao.deleteInBatch(courses);
     }
 }

@@ -32,7 +32,7 @@ public class TeacherDTO implements Serializable {
      * 教师编号
      */
     @ApiModelProperty("教师编号")
-    private Integer teachNo;
+    private String teachNo;
 
     /**
      * 教师手机号

@@ -2,9 +2,12 @@ package com.nhsoft.lemon.controller;
 
 import com.nhsoft.lemon.dto.ScoreDTO;
 import com.nhsoft.lemon.dto.StudentDTO;
+import com.nhsoft.lemon.model.Student;
+import com.nhsoft.lemon.model.extend.ScoreExtend;
 import com.nhsoft.lemon.response.R;
 import com.nhsoft.lemon.service.ScoreService;
 import com.nhsoft.lemon.service.StudentService;
+import com.nhsoft.lemon.utils.CopyUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -43,10 +46,11 @@ public class StudentController {
         if (pageSize <= 0) {
             pageSize = 5;
         }
-        List<StudentDTO> studentDTOS = studentService.listAllStudents(pageNo,pageSize);
-        if (CollectionUtils.isEmpty(studentDTOS)) {
+        List<Student> students = studentService.listAllStudents(pageNo,pageSize);
+        if (CollectionUtils.isEmpty(students)) {
             return R.error("数据为空");
         }
+        List<StudentDTO> studentDTOS = CopyUtil.toList(students, StudentDTO.class);
         log.info("方法执行结束，方法返回值为：" + studentDTOS);
         return R.ok().put("studentDTOS", studentDTOS);
     }
@@ -58,7 +62,8 @@ public class StudentController {
         if (StringUtils.isEmpty(stuNo) || StringUtils.isEmpty(year)) {
             return R.error("请输入学号和年份");
         }
-        List<ScoreDTO> scoreDTOS = scoreService.listStudentAllGrade(stuNo, year);
+        List<ScoreExtend> scoreExtends = scoreService.listStudentAllGrade(stuNo, year);
+        List<ScoreDTO> scoreDTOS = CopyUtil.toList(scoreExtends, ScoreDTO.class);
 
         return R.ok().put("scoreDTOS",scoreDTOS);
     }

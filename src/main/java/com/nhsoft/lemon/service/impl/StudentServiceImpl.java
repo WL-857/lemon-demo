@@ -2,7 +2,7 @@ package com.nhsoft.lemon.service.impl;
 
 import com.nhsoft.lemon.repository.StudentDao;
 import com.nhsoft.lemon.dto.StudentDTO;
-import com.nhsoft.lemon.mapstruct.StudentDTOConverter;
+
 import com.nhsoft.lemon.model.Student;
 import com.nhsoft.lemon.service.StudentService;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentDao studentDao;
 
     @Override
-    public List<StudentDTO> listAllStudents(int pageNo,int pageSize) {
+    public List<Student> listAllStudents(int pageNo,int pageSize) {
         if(pageNo<= 0){
             pageNo = 1;
         }
@@ -29,7 +29,6 @@ public class StudentServiceImpl implements StudentService {
         }
         PageRequest page = PageRequest.of(pageNo-1, pageSize);
         List<Student> students = studentDao.listAllStudents(page);
-        List<StudentDTO> studentDTOS = StudentDTOConverter.INSTANCE.domain2dto(students);
-        return studentDTOS;
+        return students;
     }
 }

@@ -18,7 +18,7 @@ public interface StudentService{
      * @param pageSize
      * @return
      */
-    List<StudentDTO> listAllStudents(int pageNo,int pageSize);
+    List<Student> listAllStudents(int pageNo,int pageSize);
 
 
 }

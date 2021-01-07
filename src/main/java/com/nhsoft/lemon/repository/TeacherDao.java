@@ -1,7 +1,7 @@
 package com.nhsoft.lemon.repository;
 
 import com.nhsoft.lemon.model.Teacher;
-import org.springframework.data.domain.PageRequest;
+import com.nhsoft.lemon.model.extend.ScoreExtend;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +19,6 @@ public interface TeacherDao extends JpaRepository<Teacher,Long> {
      */
     @Query(value = "select * from teacher",nativeQuery = true)
     List<Teacher> listAllTeacher(Pageable pageable);
+
 
 }

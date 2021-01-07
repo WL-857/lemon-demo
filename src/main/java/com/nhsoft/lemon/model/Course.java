@@ -38,4 +38,9 @@ public class Course implements Serializable {
      */
 
     private String couNo;
+
+    public Course(String couName, String couNo) {
+        this.couName = couName;
+        this.couNo = couNo;
+    }
 }
