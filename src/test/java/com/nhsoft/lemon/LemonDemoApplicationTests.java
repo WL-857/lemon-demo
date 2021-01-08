@@ -16,7 +16,10 @@ import com.nhsoft.lemon.utils.CopyUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -74,7 +77,7 @@ class LemonDemoApplicationTests {
     }@Test
     void test6()  {
 
-        Course course = courseDao.readCourse("c001");
+        Course course = courseDao.readCourse(1L);
         CourseDTO courseDTO = CopyUtil.to(course, CourseDTO.class);
         System.out.println(courseDTO);
     }@Test
@@ -87,5 +90,20 @@ class LemonDemoApplicationTests {
         System.out.println(i);
 
 
+    }
+    @Resource(name = "redisTemplate")
+    private RedisTemplate redisTemplate;
+    @Test
+    void test8() throws JsonProcessingException {
+
+        Course course = new Course();
+        course.setCouId(1L);
+        course.setCouName("aaaa");
+        course.setCouNo("c009");
+
+        ObjectMapper mapper = new ObjectMapper();
+        String value = mapper.writeValueAsString(course);
+        System.out.println(value);
+        redisTemplate.opsForValue().set("curse",value);
     }
 }

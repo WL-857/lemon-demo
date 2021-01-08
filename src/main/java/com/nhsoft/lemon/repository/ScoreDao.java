@@ -30,16 +30,15 @@ public interface ScoreDao extends JpaRepository<Score,Long> {
 
     /**
      * 根据教师编号查询其所教授课程的最大成绩、最小成绩、和平均成绩
-     * @param teachNo
+     * @param teachId
      * @param year
      * @return
      */
-    @Query(value = "select new com.nhsoft.lemon.model.extend.TeacherExtend(c.couName,max(s.grade),min(s.grade),avg(s.grade),t.teachName) from Score s " +
+    @Query(value = "select new com.nhsoft.lemon.model.extend.TeacherExtend(c.couName,max(s.grade),min(s.grade),avg(s.grade)) from Score s " +
             "left join Course c on c.couId = s.cId " +
             "left join TeacherCourseMapping tcm on tcm.cId = c.couId " +
-            "left join Teacher t on t.teachId = tcm.tId " +
-            "where t.teachNo = ?1 and s.time= ?2 group by c.couId")
-    List<TeacherExtend> readMaxAndMinAndAvgScoreByTeachNo(String teachNo, String year);
+            "where tcm.tId = ?1 and s.time= ?2 group by c.couId")
+    List<TeacherExtend> listMaxMinAvgScore(Long teachId, String year);
 
     /**
      * 查询学年所有学生每门学科的成绩最大值，最小值，平均值

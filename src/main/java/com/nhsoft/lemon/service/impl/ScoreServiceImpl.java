@@ -9,8 +9,10 @@ import com.nhsoft.lemon.service.ScoreService;
 import com.nhsoft.lemon.utils.CopyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ import java.util.List;
 public class ScoreServiceImpl implements ScoreService {
     @Resource
     private ScoreDao scoreDao;
+
+    @Resource
+    private RedisTemplate redisTemplate;
 
     @Override
     public List<ScoreExtend> listStudentAllGrade(String stuNo, String time) {
@@ -37,17 +42,19 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public List<TeacherExtend> readMaxAndMinAndAvgScoreByTeachNo(String teachNo, String time) {
+    public List<TeacherExtend> listMaxMinAvgScore(Long teachId, String year) {
 
-        if (StringUtils.isEmpty(teachNo) || StringUtils.isEmpty(time)) {
-            return new ArrayList<TeacherExtend>();
-        }
-        List<TeacherExtend> scoreExtends = scoreDao.readMaxAndMinAndAvgScoreByTeachNo(teachNo, time);
-        if(CollectionUtils.isEmpty(scoreExtends)){
-            return new ArrayList<TeacherExtend>();
-        }
-        return scoreExtends;
+            if (ObjectUtils.isEmpty(teachId) || StringUtils.isEmpty(year)) {
+                return new ArrayList<TeacherExtend>();
+            }
+            List<TeacherExtend> scoreExtends = scoreDao.listMaxMinAvgScore(teachId, year);
+            if(CollectionUtils.isEmpty(scoreExtends)){
+                return new ArrayList<TeacherExtend>();
+            }
+            return scoreExtends;
+
     }
+
 
     @Override
     public List<TeacherExtend> listAllMaxMinAvgScore(String year) {

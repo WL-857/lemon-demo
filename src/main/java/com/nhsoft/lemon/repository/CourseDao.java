@@ -26,12 +26,12 @@ public interface CourseDao extends JpaRepository<Course,Long> {
 
     /**
      * 根据课程编号查询课程信息
-     * @param no
+     * @param id
      * @return
      */
     @Query(value = "select new com.nhsoft.lemon.model.Course(c.couName,c.couNo) from Course c " +
-            "where c.couNo = ?1")
-    Course readCourse(String no);
+            "where c.couId = ?1")
+    Course readCourse(Long id);
 
 
 

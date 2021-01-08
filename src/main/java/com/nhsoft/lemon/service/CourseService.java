@@ -23,10 +23,10 @@ public interface CourseService {
 
     /**
      * 根据课程编号查询课程信息
-     * @param no
+     * @param id
      * @return
      */
-    Course readCourse(String no);
+    Course readCourse(Long id);
 
     /**
      * 添加课程
@@ -50,7 +50,7 @@ public interface CourseService {
 
     /**
      * 批量删除
-     * @param courses
+     * @param ids
      */
-    void batchDeleteCourse(List<Course> courses);
+    void batchDeleteCourse(List<Long> ids);
 }

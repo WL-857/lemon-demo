@@ -20,5 +20,36 @@ public interface StudentService{
      */
     List<Student> listAllStudents(int pageNo,int pageSize);
 
+    /**
+     * 根据学生id查询学生信息
+      * @param id
+     * @return
+     */
+    Student readStudent(Long id);
 
+    /**
+     * 添加学生
+     * @param student
+     * @return
+     */
+    Student saveStudent(Student student);
+
+    /**
+     * 批量添加学生
+     * @param students
+     * @return
+     */
+    List<Student> batchSaveStudent(List<Student> students);
+
+    /**
+     * 根据学生id删除学生
+     * @param id
+     */
+    void deleteStudent(Long id);
+
+    /**
+     * 批量删除学生
+     * @param ids
+     */
+    void batchDeleteStudent(List<Long> ids);
 }

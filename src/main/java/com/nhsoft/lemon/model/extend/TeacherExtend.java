@@ -43,12 +43,11 @@ public class TeacherExtend implements Serializable {
      */
     private String time;
 
-    public TeacherExtend(String couName, BigDecimal maxScore, BigDecimal minScore, Double avgScore,String teachName) {
+    public TeacherExtend(String couName, BigDecimal maxScore, BigDecimal minScore, Double avgScore) {
         this.couName = couName;
         this.maxScore = maxScore;
         this.minScore = minScore;
         this.avgScore = avgScore;
-        this.teachName = teachName;
     }
     public TeacherExtend(String couName, BigDecimal maxScore, BigDecimal minScore, String time,Double avgScore) {
         this.couName = couName;
