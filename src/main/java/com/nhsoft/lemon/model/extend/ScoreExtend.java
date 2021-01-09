@@ -39,4 +39,8 @@ public class ScoreExtend implements Serializable {
         this.time = time;
         this.stuName = stuName;
     }
+
+//    stu.stuName,c.couName,s.grade,s.time
+
+
 }

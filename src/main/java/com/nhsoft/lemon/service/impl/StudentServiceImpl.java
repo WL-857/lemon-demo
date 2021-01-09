@@ -72,6 +72,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> batchSaveStudent(List<Student> students) {
+        List<Student> studentList = studentDao.saveAll(students);
         students.forEach(student -> {
             String studentKey = RedisKey.COURSE_KEY + student.getStuId();
             Object value = redisTemplate.opsForValue().get(studentKey);
@@ -86,7 +87,6 @@ public class StudentServiceImpl implements StudentService {
                 e.printStackTrace();
             }
         });
-        List<Student> studentList = studentDao.saveAll(students);
         return studentList;
     }
 

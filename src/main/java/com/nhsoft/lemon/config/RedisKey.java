@@ -12,4 +12,8 @@ public class RedisKey {
 
     public static final String TEACHER_KEY = "lemon-demo_teacher_teachId_";
 
+    public static final String SCORE_KEY = "lemon-demo_score_scoId_";
+
+    public static final String TEACHER_COURSE_KEY = "lemon-demo_teacherCourse_";
+
 }

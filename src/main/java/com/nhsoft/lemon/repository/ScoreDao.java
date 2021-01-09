@@ -4,6 +4,7 @@ import com.nhsoft.lemon.dto.ScoreDTO;
 import com.nhsoft.lemon.model.Score;
 import com.nhsoft.lemon.model.extend.ScoreExtend;
 import com.nhsoft.lemon.model.extend.TeacherExtend;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,8 +24,8 @@ public interface ScoreDao extends JpaRepository<Score,Long> {
      * @return
      */
     @Query(value = "select new com.nhsoft.lemon.model.extend.ScoreExtend(s.grade,c.couName,s.time,stu.stuName) from Score s " +
-            "left join Course c  on c.couId = s.cId " +
-            "left join Student stu on stu.stuId = s.sId " +
+            "left join Course c  on c.couId = s.couId " +
+            "left join Student stu on stu.stuId = s.stuId " +
             "where stu.stuNo = ?1 and s.time = ?2 order by s.time")
     List<ScoreExtend> listStudentAllGrade(String stuNo, String year);
 
@@ -35,9 +36,9 @@ public interface ScoreDao extends JpaRepository<Score,Long> {
      * @return
      */
     @Query(value = "select new com.nhsoft.lemon.model.extend.TeacherExtend(c.couName,max(s.grade),min(s.grade),avg(s.grade)) from Score s " +
-            "left join Course c on c.couId = s.cId " +
-            "left join TeacherCourseMapping tcm on tcm.cId = c.couId " +
-            "where tcm.tId = ?1 and s.time= ?2 group by c.couId")
+            "left join Course c on c.couId = s.couId " +
+            "left join TeacherCourse tcm on tcm.couId = c.couId " +
+            "where tcm.teachId = ?1 and s.time= ?2 group by c.couId")
     List<TeacherExtend> listMaxMinAvgScore(Long teachId, String year);
 
     /**
@@ -46,8 +47,29 @@ public interface ScoreDao extends JpaRepository<Score,Long> {
      * @return
      */
     @Query(value = "select new com.nhsoft.lemon.model.extend.TeacherExtend(c.couName,max(s.grade),min(s.grade),s.time,avg(s.grade)) from Score s " +
-            "left join Course c on c.couId = s.cId " +
-            "left join Student s2  on s2.stuId  = s.sId " +
+            "left join Course c on c.couId = s.couId " +
+            "left join Student s2  on s2.stuId  = s.stuId " +
             "where s.time = ?1 group by c.couId")
     List<TeacherExtend> listAllMaxMinAvgScore(String year);
+
+    /**
+     * 查询所有的成绩并分页
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select new com.nhsoft.lemon.model.extend.ScoreExtend(s.grade,c.couName,s.time,stu.stuName) from Score s " +
+            "left join Student stu on stu.stuId = s.stuId " +
+            "left join Course c on c.couId = s.couId ")
+    List<ScoreExtend> listAllScore(Pageable pageable);
+
+    /**
+     * 根据id查询分数
+     * @param id
+     * @return
+     */
+    @Query(value = "select new com.nhsoft.lemon.model.extend.ScoreExtend(s.grade,c.couName,s.time,stu.stuName) from Score s " +
+            "left join Student stu on stu.stuId = s.stuId " +
+            "left join Course c on c.couId = s.couId " +
+            "where s.scoId = ?1")
+    ScoreExtend readScore(Long id);
 }

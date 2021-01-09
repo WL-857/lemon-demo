@@ -32,12 +32,14 @@ public class Score implements Serializable {
     /**
      * 学生id
      */
-    private Long sId;
+    @Column(name = "s_id")
+    private Long stuId;
 
     /**
      * 课程id
      */
-    private Long cId;
+    @Column(name = "c_id")
+    private Long couId;
 
     /**
      * 科目的成绩

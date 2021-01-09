@@ -57,5 +57,8 @@ public class TeacherExtend implements Serializable {
         this.time = time;
     }
 
-
+    public TeacherExtend(String teachName,String couName ) {
+        this.couName = couName;
+        this.teachName = teachName;
+    }
 }
